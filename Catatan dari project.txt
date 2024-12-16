@@ -1,0 +1,28 @@
+biar memastikan kalo ini buat server aja
+- server-only
+
+buat debugging, bagus banget fiturnya
+-Sentry
+
+buat icon
+- lucide-react
+
+buat download re-usable components
+- shadcn
+
+buat pitch atau markdown di frontend
+- @uiw/react-md-editor (Komponen berbasis React.)
+- easyMDE (Toolbar bawaan js untuk aksi seperti bold, italic, insert link, dll.)
+- markdown-it
+( markdown-it adalah parser Markdown murni berbasis JavaScript. Tidak seperti dua pustaka sebelumnya, markdown-it tidak memiliki editor visual. Fungsinya adalah untuk mengonversi teks Markdown ke dalam HTML.)
+
+buat CMD (yang gw tangkep buat ngurus database secara tampilan yang mudah)
+- sanity (next-sanity)
+- buat pitchnya (sanity-plugin-markdown)
+
+ngubah judul jadi slug
+- slugify
+
+source project:
+Next.js 15 Crash Course | Build and Deploy a Production-Ready Full Stack App
+https://www.youtube.com/watch?v=Zq5fmkH0T78
