@@ -1,14 +1,20 @@
 'use client';
 
 import { Trash } from 'lucide-react';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { deletePitch } from '@/lib/action';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 const DeleteStartup = ({ id }: { id: string }) => {
   const MySwal = withReactContent(Swal);
+  const [mounted, setMounted] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleDelete = async () => {
     const result = await MySwal.fire({
@@ -23,6 +29,15 @@ const DeleteStartup = ({ id }: { id: string }) => {
 
     if (result.isConfirmed) {
       try {
+        MySwal.fire({
+          title: 'Deleting...',
+          text: 'Please wait while we delete the startup.',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          },
+        });
+
         const response = await deletePitch(id); // Panggil fungsi deletePitch
         if (response.status === 'SUCCESS') {
           await MySwal.fire({
@@ -31,8 +46,8 @@ const DeleteStartup = ({ id }: { id: string }) => {
             icon: 'success',
           });
 
-          // Redirect setelah sukses
-          redirect('/');
+          // Redirect setelah berhasil dihapus
+          router.push('/');
         } else {
           throw new Error(response.error || 'Something went wrong');
         }
@@ -43,9 +58,15 @@ const DeleteStartup = ({ id }: { id: string }) => {
           text: 'Failed to delete the startup. Please try again later.',
           icon: 'error',
         });
+      } finally {
+        Swal.close();
       }
     }
   };
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <button
