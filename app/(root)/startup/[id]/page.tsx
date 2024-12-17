@@ -1,5 +1,5 @@
 import { formatDate } from '@/lib/utils';
-import { client } from '@/sanity/lib/client';
+import { client, clientNoCdn } from '@/sanity/lib/client';
 import { PLAYLIST_BY_SLUG_QUERY, STARTUP_BY_ID_QUERY } from '@/sanity/lib/queries';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -23,7 +23,7 @@ const page = async ({ params }: { params: Promise<{ id: string }>}) => {
 
   // Ini contoh parralel rendering, jadi dua data fetch atau lebih yang gak saling ketergantungan bisa pake Promise all biar barengan ambilnya
   const [post, { select: editorPosts } ] = await Promise.all([
-    await client.fetch(STARTUP_BY_ID_QUERY, { id }),
+    await clientNoCdn.fetch(STARTUP_BY_ID_QUERY, { id }),
     await client.fetch(PLAYLIST_BY_SLUG_QUERY, { slug: 'editor-picks-new' })
   ])
 
